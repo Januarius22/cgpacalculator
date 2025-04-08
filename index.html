@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA CALCULATOR</title>
+    <style>
+        * {
+            text-decoration: none;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            font-family: 'Courier New', Courier, monospace
+        }
+
+        body {
+            background: linear-gradient(45deg, black, white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            padding: 10px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            overflow-y: scroll;
+        }
+
+        .title h1 {
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+            color: white;
+            text-align: center;
+        }
+
+        .level input, select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            outline:none;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: transparent;
+            color: white;
+            font-size: 1rem;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .text, .cgpa, #displayLevel {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        #result {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: bold;
+        }
+
+        .Results {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 15px;
+            
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            margin-top: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background: #6c757d;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #495057;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                max-width: 90%;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+        #level{
+          font-family: 'Courier New', Courier, monospace;
+          font-weight: bold;
+          outline: none;
+          border-top : none ;
+          border-bottom: 2px solid black;
+          border-right: none;
+          border-left: none;
+          border-radius:none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>CGPA CALCULATOR</h1>
+        </div>
+        <div class="level">
+            <input type="text" placeholder="Enter Your Level" id="level" onblur="DisplayLevel()">
+            <p id="displayLevel"></p>
+        </div>
+        <div class="text">
+            <p>Enter your grades to calculate</p>
+        </div>
+        <div class="cgpa">
+            <p id="result">0.00</p>
+            <p id="semester">Total GPA for The Semester</p>
+        </div>
+        <div class="Results">
+            <table id="gradestable">
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Credit</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" placeholder="Course"></td>
+                        <td>
+                            <select>
+                   <option value="" disabled selected>Units</option>             <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select>
+                   <option value="" disabled selected>Grade</option>               <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                   <option value="E">E</option>             <option value="F">F</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button onclick="addRow()">Add More</button>
+            <button onclick="removeRow()">Remove</button>
+        </div>
+        <button id="calculate">Calculate</button>
+    </div>
+
+    <script>
+        function DisplayLevel(){
+            let Level = document.getElementById("level").value;
+            let Display = document.getElementById("displayLevel");
+            let Semester = document.getElementById('semester');
+            Display.innerHTML = `You're in ${Level} Level`;
+            Semester.innerHTML = `Total GPA for ${Level} level`;
+        }
+
+        function addRow(){
+            let table = document.getElementById("gradestable").getElementsByTagName('tbody')[0];
+            let newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td><input type="text" placeholder="Course"></td>
+                        <td>
+                            <select>
+                   <option value="" disabled selected>Units</option>             <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select>
+                   <option value="" disabled selected>Grade</option>               <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                   <option value="E">E</option>             <option value="F">F</option>
+                            </select>
+                        </td>
+            `;
+        }
+
+        function removeRow(){
+            let table = document.getElementById("gradestable").getElementsByTagName('tbody')[0];
+            if (table.rows.length > 1) {
+                table.deleteRow(table.rows.length - 1);
+            } else {
+                alert("You must have at least one course set.");
+            }
+        }
+
+        document.getElementById("calculate").onclick = function () {
+            let table = document.getElementById("gradestable").getElementsByTagName('tbody')[0];
+            let rows = table.getElementsByTagName('tr');
+            let totalGradePoints = 0, totalCreditUnits = 0;
+
+            for (let row of rows) {
+                let credits = parseInt(row.cells[1].getElementsByTagName('select')[0].value);
+                let grade = row.cells[2].getElementsByTagName('select')[0].value;
+                let points = { "A": 5, "B": 4, "C": 3, "D": 2,"E" : 1 ,"F": 0 }[grade];
+                totalGradePoints += points * credits;
+                totalCreditUnits += credits;
+            }
+
+            document.getElementById("result").innerText = totalCreditUnits > 0 ? (totalGradePoints / totalCreditUnits).toFixed(2) : "0.00";
+        };
+    </script>
+</body>
+</html>
