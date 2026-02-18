@@ -1,258 +1,726 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CGPA CALCULATOR</title>
     <style>
-        * {
-            text-decoration: none;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-            font-family: 'Courier New', Courier, monospace
-        }
+      * {
+        text-decoration: none;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+        font-family: "Courier New", Courier, monospace;
+      }
 
-        body {
-            background: linear-gradient(45deg, black, white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100vw;
-            padding: 10px;
-        }
+      body {
+        background: linear-gradient(45deg, black, white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        padding: 10px;
+        overflow: hidden;
+        overflow-y: scroll;
+      }
 
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        max-width: 600px;
+        width: 100%;
+        height: 550px;
+        overflow: hidden;
+      }
+      .container2 {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        max-width: 600px;
+        width: 100%;
+        height: 550px;
+        overflow: hidden;
+      }
+
+      .title h1 {
+        font-size: clamp(1.8rem, 5vw, 2.4rem);
+        color: white;
+        text-align: center;
+      }
+
+      .level input,
+      select,
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        outline: none;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        background: transparent;
+        color: white;
+        font-size: 1rem;
+      }
+
+      input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .text,
+      .cgpa,
+      #displayLevel {
+        text-align: center;
+        color: white;
+        font-size: 1.2rem;
+        margin-top: 10px;
+      }
+
+      #result1,
+      #result2 {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        font-weight: bold;
+      }
+
+      .Results {
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 15px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        text-align: center;
+        color: white;
+      }
+
+      th {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .endbtn {
+        width: 50%;
+        padding: 12px;
+        border: none;
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        background: #6c757d;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #495057;
+      }
+      .level {
+        display: flex;
+        justify-content: center;
+      }
+
+      .level-btn {
+        width: 50px;
+        height: 50px;
+        margin: 0 5px;
+        border: none;
+        border-radius: 50%;
+        background: #6c757d;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .butss {
+        width: 100%;
+        display: flex;
+        gap: 12px;
+      }
+      .endbtns {
+        width: 50%;
+        padding: 12px;
+        border: none;
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        background: #6c757d;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .addedsub {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      #calculate1,
+      #calculate2 {
+        width: 50%;
+        padding: 12px;
+        border: none;
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        background: #6c757d;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #calculate1:hover,
+      #calculate2:hover {
+        background: #495057;
+      }
+      .semes-ter {
+        display: flex;
+        margin-top: 10px;
+      }
+      .semester-btn {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        margin: 0 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        background: #6c757d;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .semester-btn:hover {
+        background: #495057;
+      }
+
+      @media (max-width: 600px) {
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            max-width: 600px;
-            width: 100%;
-            height: 600px;
-            overflow: hidden;
-            overflow-y: scroll;
-        }
-
-        .title h1 {
-            font-size: clamp(1.8rem, 5vw, 2.4rem);
-            color: white;
-            text-align: center;
-        }
-
-        .level input, select, input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            outline:none;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            background: transparent;
-            color: white;
-            font-size: 1rem;
-        }
-
-        input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .text, .cgpa, #displayLevel {
-            text-align: center;
-            color: white;
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-
-        #result {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: bold;
-        }
-
-        .Results {
-            width: 100%;
-            overflow-x: auto;
-            margin-top: 15px;
-            
+          max-width: 90%;
         }
 
         table {
-            width: 100%;
-            border-collapse: collapse;
+          display: block;
+          overflow-x: auto;
         }
-
-        th, td {
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 10px;
-            text-align: center;
-            color: white;
-        }
-
-        th {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        tr:nth-child(even) {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            margin-top: 10px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: white;
-            background: #6c757d;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #495057;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                max-width: 90%;
-            }
-
-            table {
-                display: block;
-                overflow-x: auto;
-            }
-        }
-        #level{
-          font-family: 'Courier New', Courier, monospace;
-          font-weight: bold;
-          outline: none;
-          border-top : none ;
-          border-bottom: 2px solid black;
-          border-right: none;
-          border-left: none;
-          border-radius:none;
-        }
+      }
+      #level {
+        font-family: "Courier New", Courier, monospace;
+        font-weight: bold;
+        outline: none;
+        border-top: none;
+        border-bottom: 2px solid black;
+        border-right: none;
+        border-left: none;
+        border-radius: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="title">
-            <h1>CGPA CALCULATOR</h1>
+      <div class="title">
+        <h1 id="titleLevel">CGPA CALCULATOR 100L</h1>
+      </div>
+      <div class="level">
+        <!-- <input type="text" placeholder="Enter Your Level" id="level" onblur="DisplayLevel()"> -->
+        <button class="level-btn" value="100" id="oneL">100L</button>
+        <button class="level-btn" value="200" id="twoL">200L</button>
+        <button class="level-btn" value="300" id="threeL">300L</button>
+        <button class="level-btn" value="400" id="fourL">400L</button>
+        <button class="level-btn" value="500" id="fiveL">500L</button>
+        <p id="displayLevel"></p>
+      </div>
+      <div class="semes-ter">
+        <!-- <button class="semester-btn" value="1" id="sem1">
+          1st Semester
+        </button> -->
+        <button class="semester-btn" value="2" id="sem2">2nd Semester</button>
+      </div>
+      <div class="text">
+        <p><b>Enter Your First Semester Grades to Calculate</b></p>
+      </div>
+      <div class="cgpa">
+        <p id="result1">0.00</p>
+        <p id="cgpaDisplay" style="margin-top: 10px; font-weight: bold">
+          CGPA (100L): 0.00
+        </p>
+        <p id="overallCgpa" style="margin-top: 6px; font-weight: bold">
+          Overall CGPA (100L - 100L): 0.00
+        </p>
+
+        <!-- <p id="semester">Total GPA for The Semester</p> -->
+      </div>
+      <div class="Results">
+        <table id="gradestable1">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Credit</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" placeholder="Course" /></td>
+              <td>
+                <select>
+                  <option value="" disabled selected>Units</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </td>
+              <td>
+                <select>
+                  <option value="" disabled selected>Grade</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="addedsub">
+          <button type="button" onclick="addRow('gradestable1')" class="endbtn">
+            Add More
+          </button>
+          <button
+            type="button"
+            onclick="removeRow('gradestable1')"
+            class="endbtn"
+          >
+            Remove
+          </button>
         </div>
-        <div class="level">
-            <input type="text" placeholder="Enter Your Level" id="level" onblur="DisplayLevel()">
-            <p id="displayLevel"></p>
-        </div>
-        <div class="text">
-            <p>Enter your grades to calculate</p>
-        </div>
-        <div class="cgpa">
-            <p id="result">0.00</p>
-            <p id="semester">Total GPA for The Semester</p>
-        </div>
-        <div class="Results">
-            <table id="gradestable">
-                <thead>
-                    <tr>
-                        <th>Course</th>
-                        <th>Credit</th>
-                        <th>Grade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" placeholder="Course"></td>
-                        <td>
-                            <select>
-                   <option value="" disabled selected>Units</option>             <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select>
-                   <option value="" disabled selected>Grade</option>               <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                   <option value="E">E</option>             <option value="F">F</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <button onclick="addRow()">Add More</button>
-            <button onclick="removeRow()">Remove</button>
-        </div>
-        <button id="calculate">Calculate</button>
+      </div>
+      <div class="butss">
+        <button
+          type="button"
+          onclick="calculateGPA('gradestable1', 'result1', 1)"
+          id="calculate1"
+        >
+          Calculate
+        </button>
+        <button type="button" id="clearAll" class="endbtns">
+          Clear All Data
+        </button>
+      </div>
+    </div>
+
+    <!-- Second Semester -->
+
+    <div class="container2">
+      <div class="title">
+        <h1 id="titleLevel2">CGPA CALCULATOR 100L</h1>
+      </div>
+      <div class="level">
+        <!-- <input type="text" placeholder="Enter Your Level" id="level" onblur="DisplayLevel()"> -->
+        <!-- <button class="level-btn" value="100" id="oneL">100</button>
+        <button class="level-btn" value="200" id="twoL">200</button>
+        <button class="level-btn" value="300" id="threeL">300</button>
+        <button class="level-btn" value="400" id="fourL">400</button>
+        <button class="level-btn" value="500" id="fiveL">500</button> -->
+        <p id="displayLevel"></p>
+      </div>
+      <div class="semes-ter">
+        <button class="semester-btn" value="1" id="sem1">1st Semester</button>
+        <!-- <button class="semester-btn" value="2" id="sem2">
+          2nd Semester
+        </button> -->
+      </div>
+      <div class="text">
+        <p><b>Enter Your Second Semester Grades to Calculate</b></p>
+      </div>
+      <div class="cgpa">
+        <p id="result2">0.00</p>
+        <p id="cgpaDisplay2" style="margin-top: 10px; font-weight: bold">
+          CGPA (100L): 0.00
+        </p>
+        <p id="overallCgpa2" style="margin-top: 6px; font-weight: bold">
+          Overall CGPA (100L - 100L): 0.00
+        </p>
+
+        <!-- <p id="semester">Total GPA for The Semester</p> -->
+      </div>
+      <div class="Results">
+        <table id="gradestable2">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Credit</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" placeholder="Course" /></td>
+              <td>
+                <select>
+                  <option value="" disabled selected>Units</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </td>
+              <td>
+                <select>
+                  <option value="" disabled selected>Grade</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="addedsub">
+          <button type="button" onclick="addRow('gradestable2')" class="endbtn">
+            Add More
+          </button>
+          <button
+            type="button"
+            onclick="removeRow('gradestable2')"
+            class="endbtn"
+          >
+            Remove
+          </button>
+      </div>
+        <div class="butss">
+            <button
+            type="button"
+            onclick="calculateGPA('gradestable2', 'result2', 2)"
+            id="calculate2"
+            >
+            Calculate
+            </button>
+            <button type="button" id="clearAll2" class="endbtns">
+            Clear All Data
+            </button>
     </div>
 
     <script>
-        function DisplayLevel(){
-            let Level = document.getElementById("level").value;
-            let Display = document.getElementById("displayLevel");
-            let Semester = document.getElementById('semester');
-            Display.innerHTML = `You're in ${Level} Level`;
-            Semester.innerHTML = `Total GPA for ${Level} level`;
+      // GPA mapping
+      const gradePoints = { A: 5, B: 4, C: 3, D: 2, E: 1, F: 0 };
+
+      function addRow(tableId) {
+        const tbody = document.getElementById(tableId).querySelector("tbody");
+        const newRow = tbody.insertRow();
+        newRow.innerHTML = `
+      <td><input type="text" placeholder="Course"></td>
+      <td>
+        <select>
+          <option value="" disabled selected>Units</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </td>
+      <td>
+        <select>
+          <option value="" disabled selected>Grade</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+        </select>
+      </td>
+    `;
+      }
+
+      document
+        .getElementById("oneL")
+        .addEventListener("click", () => setLevel(100));
+      document
+        .getElementById("twoL")
+        .addEventListener("click", () => setLevel(200));
+      document
+        .getElementById("threeL")
+        .addEventListener("click", () => setLevel(300));
+      document
+        .getElementById("fourL")
+        .addEventListener("click", () => setLevel(400));
+      document
+        .getElementById("fiveL")
+        .addEventListener("click", () => setLevel(500));
+
+      function removeRow(tableId) {
+        const tbody = document.getElementById(tableId).querySelector("tbody");
+        if (tbody.rows.length > 1) {
+          tbody.deleteRow(tbody.rows.length - 1);
+        } else {
+          alert("You must have at least one course set.");
+        }
+      }
+
+      function resetTableToOneRow(tableId) {
+        const tbody = document.getElementById(tableId).querySelector("tbody");
+
+        // remove all rows
+        while (tbody.rows.length > 0) tbody.deleteRow(0);
+
+        // add back one empty row
+        const row = tbody.insertRow();
+        row.innerHTML = `
+    <td><input type="text" placeholder="Course" /></td>
+    <td>
+      <select>
+        <option value="" disabled selected>Units</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </td>
+    <td>
+      <select>
+        <option value="" disabled selected>Grade</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+      </select>
+    </td>
+  `;
+      }
+
+      function calcGPAFromStored(level, sem) {
+        const { gp, cu } = getSemester(level, sem);
+        return cu > 0 ? (gp / cu).toFixed(2) : "0.00";
+      }
+
+      function loadSavedGPAsToUI(level) {
+        document.getElementById("result1").innerText = calcGPAFromStored(
+          level,
+          1,
+        );
+        document.getElementById("result2").innerText = calcGPAFromStored(
+          level,
+          2,
+        );
+      }
+
+      function clearUIForNewLevel() {
+        resetTableToOneRow("gradestable1");
+        resetTableToOneRow("gradestable2");
+
+        // reset the big semester GPA display numbers
+        // document.getElementById("result1").innerText = "0.00";
+        // document.getElementById("result2").innerText = "0.00";
+      }
+
+      let currentLevel = 100; // later we change this when user clicks 200/300/400/500
+
+      function calcTotals(tableId) {
+        const tbody = document.getElementById(tableId).querySelector("tbody");
+        const rows = tbody.querySelectorAll("tr");
+
+        let totalGradePoints = 0;
+        let totalCreditUnits = 0;
+
+        for (const row of rows) {
+          const credits = parseInt(
+            row.cells[1].querySelector("select").value,
+            10,
+          );
+          const grade = row.cells[2].querySelector("select").value;
+
+          if (!credits || !grade) continue;
+
+          totalGradePoints += gradePoints[grade] * credits;
+          totalCreditUnits += credits;
         }
 
-        function addRow(){
-            let table = document.getElementById("gradestable").getElementsByTagName('tbody')[0];
-            let newRow = table.insertRow();
-            newRow.innerHTML = `
-                <td><input type="text" placeholder="Course"></td>
-                        <td>
-                            <select>
-                   <option value="" disabled selected>Units</option>             <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select>
-                   <option value="" disabled selected>Grade</option>               <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                   <option value="E">E</option>             <option value="F">F</option>
-                            </select>
-                        </td>
-            `;
+        return { totalGradePoints, totalCreditUnits };
+      }
+
+      function saveSemester(level, sem, gp, cu) {
+        localStorage.setItem(`lvl${level}_sem${sem}_gp`, String(gp));
+        localStorage.setItem(`lvl${level}_sem${sem}_cu`, String(cu));
+      }
+
+      function getSemester(level, sem) {
+        const gp = parseFloat(
+          localStorage.getItem(`lvl${level}_sem${sem}_gp`) || "0",
+        );
+        const cu = parseFloat(
+          localStorage.getItem(`lvl${level}_sem${sem}_cu`) || "0",
+        );
+        return { gp, cu };
+      }
+
+      function updateOverallCGPA(uptoLevel) {
+        const levels = [100, 200, 300, 400, 500];
+
+        let totalGP = 0;
+        let totalCU = 0;
+
+        for (const lvl of levels) {
+          if (lvl > uptoLevel) break;
+
+          const s1 = getSemester(lvl, 1);
+          const s2 = getSemester(lvl, 2);
+
+          totalGP += s1.gp + s2.gp;
+          totalCU += s1.cu + s2.cu;
         }
 
-        function removeRow(){
-            let table = document.getElementById("gradestable").getElementsByTagName('tbody')[0];
-            if (table.rows.length > 1) {
-                table.deleteRow(table.rows.length - 1);
-            } else {
-                alert("You must have at least one course set.");
-            }
-        }
+        const overall = totalCU > 0 ? (totalGP / totalCU).toFixed(2) : "0.00";
 
-        document.getElementById("calculate").onclick = function () {
-            let table = document.getElementById("gradestable").getElementsByTagName('tbody')[0];
-            let rows = table.getElementsByTagName('tr');
-            let totalGradePoints = 0, totalCreditUnits = 0;
+        const overallEl1 = document.getElementById("overallCgpa");
+        const overallEl2 = document.getElementById("overallCgpa2");
 
-            for (let row of rows) {
-                let credits = parseInt(row.cells[1].getElementsByTagName('select')[0].value);
-                let grade = row.cells[2].getElementsByTagName('select')[0].value;
-                let points = { "A": 5, "B": 4, "C": 3, "D": 2,"E" : 1 ,"F": 0 }[grade];
-                totalGradePoints += points * credits;
-                totalCreditUnits += credits;
-            }
+        const label = `Overall CGPA (100L - ${uptoLevel}L): ${overall}`;
 
-            document.getElementById("result").innerText = totalCreditUnits > 0 ? (totalGradePoints / totalCreditUnits).toFixed(2) : "0.00";
-        };
+        if (overallEl1) overallEl1.textContent = label;
+        if (overallEl2) overallEl2.textContent = label;
+
+        return overall;
+      }
+
+      function setLevel(level) {
+        currentLevel = level;
+
+        // clear old inputs so previous level doesn't show
+        clearUIForNewLevel();
+
+        // update titles
+        const t1 = document.getElementById("titleLevel");
+        const t2 = document.getElementById("titleLevel2");
+
+        if (t1) t1.textContent = `CGPA CALCULATOR ${level}L`;
+        if (t2) t2.textContent = `CGPA CALCULATOR ${level}L`;
+
+        // show saved semester GPAs for this level
+        loadSavedGPAsToUI(level);
+
+        // update CGPA + overall CGPA
+        updateLevelCGPA(level);
+        updateOverallCGPA(level);
+      }
+
+      function updateLevelCGPA(level) {
+        const s1 = getSemester(level, 1);
+        const s2 = getSemester(level, 2);
+
+        const totalGP = s1.gp + s2.gp;
+        const totalCU = s1.cu + s2.cu;
+
+        const cgpa = totalCU > 0 ? (totalGP / totalCU).toFixed(2) : "0.00";
+
+        const cgpaEl1 = document.getElementById("cgpaDisplay");
+        const cgpaEl2 = document.getElementById("cgpaDisplay2");
+
+        if (cgpaEl1) cgpaEl1.textContent = `CGPA (${level}L): ${cgpa}`;
+        if (cgpaEl2) cgpaEl2.textContent = `CGPA (${level}L): ${cgpa}`;
+
+        return cgpa;
+      }
+
+      // sem = 1 for first semester, sem = 2 for second semester
+      function calculateGPA(tableId, resultId, sem) {
+        const { totalGradePoints, totalCreditUnits } = calcTotals(tableId);
+
+        const gpa =
+          totalCreditUnits > 0
+            ? (totalGradePoints / totalCreditUnits).toFixed(2)
+            : "0.00";
+
+        document.getElementById(resultId).innerText = gpa;
+
+        // save totals to localStorage
+        saveSemester(currentLevel, sem, totalGradePoints, totalCreditUnits);
+
+        // update CGPA display for that level
+        updateLevelCGPA(currentLevel);
+        updateOverallCGPA(currentLevel);
+        loadSavedGPAsToUI(currentLevel);
+      }
+
+      // ✅ Semester switching (your main goal)
+      const container1 = document.querySelector(".container");
+      const container2 = document.querySelector(".container2");
+
+      const sem2Btn = document.getElementById("sem2"); // button in container1
+      const sem1Btn = document.getElementById("sem1"); // button in container2
+
+      sem2Btn.addEventListener("click", () => {
+        container1.style.display = "none";
+        container2.style.display = "flex";
+      });
+
+      sem1Btn.addEventListener("click", () => {
+        container2.style.display = "none";
+        container1.style.display = "flex";
+      });
+
+      setLevel(100);
+      function clearAllData() {
+  const ok = confirm(
+    "This will delete ALL saved CGPA data for 100L–500L (both semesters). Continue?"
+  );
+  if (!ok) return;
+
+  const levels = [100, 200, 300, 400, 500];
+
+  for (const lvl of levels) {
+    for (const sem of [1, 2]) {
+      localStorage.removeItem(`lvl${lvl}_sem${sem}_gp`);
+      localStorage.removeItem(`lvl${lvl}_sem${sem}_cu`);
+    }
+  }
+
+  // reset UI back to 100L fresh
+  setLevel(100);
+
+  // optional: go back to first semester screen
+  container2.style.display = "none";
+  container1.style.display = "flex";
+
+  alert("All saved CGPA data has been cleared.");
+}
+
+// button hooks
+const clearBtn1 = document.getElementById("clearAll");
+if (clearBtn1) clearBtn1.addEventListener("click", clearAllData);
+
+const clearBtn2 = document.getElementById("clearAll2");
+if (clearBtn2) clearBtn2.addEventListener("click", clearAllData);
+
     </script>
-</body>
+  </body>
 </html>
